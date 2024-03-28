@@ -19,6 +19,98 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
+	ClaimService_GetClaim_FullMethodName = "/chat.ClaimService/GetClaim"
+)
+
+// ClaimServiceClient is the client API for ClaimService service.
+//
+// For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
+type ClaimServiceClient interface {
+	// Sends a greeting
+	GetClaim(ctx context.Context, in *ClaimRequest, opts ...grpc.CallOption) (*ClaimResponse, error)
+}
+
+type claimServiceClient struct {
+	cc grpc.ClientConnInterface
+}
+
+func NewClaimServiceClient(cc grpc.ClientConnInterface) ClaimServiceClient {
+	return &claimServiceClient{cc}
+}
+
+func (c *claimServiceClient) GetClaim(ctx context.Context, in *ClaimRequest, opts ...grpc.CallOption) (*ClaimResponse, error) {
+	out := new(ClaimResponse)
+	err := c.cc.Invoke(ctx, ClaimService_GetClaim_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+// ClaimServiceServer is the server API for ClaimService service.
+// All implementations must embed UnimplementedClaimServiceServer
+// for forward compatibility
+type ClaimServiceServer interface {
+	// Sends a greeting
+	GetClaim(context.Context, *ClaimRequest) (*ClaimResponse, error)
+	mustEmbedUnimplementedClaimServiceServer()
+}
+
+// UnimplementedClaimServiceServer must be embedded to have forward compatible implementations.
+type UnimplementedClaimServiceServer struct {
+}
+
+func (UnimplementedClaimServiceServer) GetClaim(context.Context, *ClaimRequest) (*ClaimResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetClaim not implemented")
+}
+func (UnimplementedClaimServiceServer) mustEmbedUnimplementedClaimServiceServer() {}
+
+// UnsafeClaimServiceServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to ClaimServiceServer will
+// result in compilation errors.
+type UnsafeClaimServiceServer interface {
+	mustEmbedUnimplementedClaimServiceServer()
+}
+
+func RegisterClaimServiceServer(s grpc.ServiceRegistrar, srv ClaimServiceServer) {
+	s.RegisterService(&ClaimService_ServiceDesc, srv)
+}
+
+func _ClaimService_GetClaim_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ClaimRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ClaimServiceServer).GetClaim(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: ClaimService_GetClaim_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ClaimServiceServer).GetClaim(ctx, req.(*ClaimRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+// ClaimService_ServiceDesc is the grpc.ServiceDesc for ClaimService service.
+// It's only intended for direct use with grpc.RegisterService,
+// and not to be introspected or modified (even as a copy)
+var ClaimService_ServiceDesc = grpc.ServiceDesc{
+	ServiceName: "chat.ClaimService",
+	HandlerType: (*ClaimServiceServer)(nil),
+	Methods: []grpc.MethodDesc{
+		{
+			MethodName: "GetClaim",
+			Handler:    _ClaimService_GetClaim_Handler,
+		},
+	},
+	Streams:  []grpc.StreamDesc{},
+	Metadata: "chat.proto",
+}
+
+const (
 	ChatService_SayHello_FullMethodName = "/chat.ChatService/SayHello"
 )
 

@@ -3,6 +3,35 @@ package chat;
 
 option go_package = "github.com/carmal891/grpc-api";
 
+import "google/api/annotations.proto";
+
+// Here is the overall ClaimService service definition where we define all our endpoints
+service ClaimService {
+  // Sends a greeting
+  rpc GetClaim (ClaimRequest) returns (ClaimResponse) {
+    option (google.api.http) = {
+      get: "/v1/claim/{claim_id}"
+    };
+  }
+}
+
+// The request message containing the user's name
+message ClaimRequest {
+  string claim_id = 1;
+}
+
+// The response message containing the greetings
+message ClaimResponse {
+  Claim claim = 1;
+}
+
+message Claim {
+   string claim_id = 1;
+   string claim_amount = 2;
+   string claim_coverage = 3;
+   string claim_message = 4;
+   
+}
 
 message Message{
     string body = 1;
