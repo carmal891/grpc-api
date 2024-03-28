@@ -1,0 +1,15 @@
+syntax="proto3";
+package chat;
+
+option go_package = "github.com/carmal891/grpc-api";
+
+
+message Message{
+    string body = 1;
+}
+
+service ChatService {
+    rpc SayHello(Message) returns (Message) {}
+}
+
+//protoc --go_out=import_path=github.com/yourusername/yourproject:. chat.proto
