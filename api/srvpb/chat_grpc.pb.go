@@ -4,7 +4,7 @@
 // - protoc             v4.25.3
 // source: chat.proto
 
-package api
+package srvpb
 
 import (
 	context "context"
@@ -19,7 +19,7 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
-	ChatService_SayHello_FullMethodName = "/chat.ChatService/SayHello"
+	ChatService_SayHello_FullMethodName = "/api.ChatService/SayHello"
 )
 
 // ChatServiceClient is the client API for ChatService service.
@@ -96,7 +96,7 @@ func _ChatService_SayHello_Handler(srv interface{}, ctx context.Context, dec fun
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
 var ChatService_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "chat.ChatService",
+	ServiceName: "api.ChatService",
 	HandlerType: (*ChatServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
