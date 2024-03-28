@@ -1,7 +1,7 @@
 syntax="proto3";
-package api;
+package chat;
 
-option go_package = "/srvpb";
+option go_package = "github.com/carmal891/grpc-api";
 
 
 message Message{
